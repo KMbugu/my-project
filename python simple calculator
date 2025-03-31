@@ -1,0 +1,22 @@
+num_1 = float(input("Enter a number: "))
+operator = input("Enter an operator: ")
+num_2 = float(input("Enter another number: "))
+
+if operator == "+":
+    result = num_1 + num_2
+    print(f"{num_1} + {num_2} = {result}")
+
+elif operator == "-":
+    result = num_1 - num_2
+    print(f"{num_1} - {num_2} = {result}")
+
+elif operator == "*":
+    result = num_1 * num_2
+    print(f"{num_1} * {num_2} = {result}")
+
+elif operator == "/":
+    result = num_1 / num_2
+    print(f"{num_1} / {num_2} = {result}")
+
+else:
+    print("Invalid operator. Please use +,-,* or /")
