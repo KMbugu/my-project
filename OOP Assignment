@@ -1,0 +1,110 @@
+# Assignment 1: Superhero Class with Inheritance
+class Superhero:
+    def __init__(self, name, alias, strength, health=100):
+        """Constructor to initialize Superhero attributes."""
+        self._name = name  # Encapsulated attribute
+        self._alias = alias  # Encapsulated attribute
+        self.strength = strength
+        self.health = health
+
+    # Getter for name (encapsulation)
+    @property
+    def name(self):
+        return self._name
+
+    # Setter for name (encapsulation)
+    @name.setter
+    def name(self, value):
+        if isinstance(value, str) and value.strip():
+            self._name = value
+        else:
+            raise ValueError("Name must be a non-empty string")
+
+    # Method to display superhero info
+    def display_info(self):
+        return f"{self._alias} ({self._name}), Strength: {self.strength}, Health: {self.health}"
+
+    # Method to heal the superhero
+    def heal(self, amount):
+        self.health = min(100, self.health + amount)
+        return f"{self._alias} healed by {amount}. Current health: {self.health}"
+
+    # Method to take damage
+    def take_damage(self, damage):
+        self.health = max(0, self.health - damage)
+        return f"{self._alias} took {damage} damage. Current health: {self.health}"
+
+    # Method for polymorphism (to be overridden)
+    def use_power(self):
+        return f"{self._alias} is preparing to use their power!"
+
+# Inherited class: FlyingSuperhero
+class FlyingSuperhero(Superhero):
+    def __init__(self, name, alias, strength, flight_speed, health=100):
+        super().__init__(name, alias, strength, health)
+        self.flight_speed = flight_speed
+
+    # Override use_power for polymorphism
+    def use_power(self):
+        return f"{self._alias} soars into the sky at {self.flight_speed} mph!"
+
+    # Additional method
+    def fly(self):
+        return f"{self._alias} is flying at {self.flight_speed} mph!"
+
+# Inherited class: StrengthSuperhero
+class StrengthSuperhero(Superhero):
+    def __init__(self, name, alias, strength, max_lift, health=100):
+        super().__init__(name, alias, strength, health)
+        self.max_lift = max_lift
+
+    # Override use_power for polymorphism
+    def use_power(self):
+        return f"{self._alias} lifts {self.max_lift} tons with super strength!"
+
+    # Additional method
+    def smash(self):
+        return f"{self._alias} smashes the ground, lifting {self.max_lift} tons!"
+
+# Activity 2: Polymorphism Challenge
+def demonstrate_powers(superheroes):
+    """Function to demonstrate polymorphic behavior of use_power method."""
+    print("\nSuperheroes Unleashing Their Powers:")
+    for hero in superheroes:
+        print(hero.use_power())
+
+# Main program to test the classes
+def main():
+    # Create instances of different superheroes
+    generic_hero = Superhero("Clark Kent", "Superman", 90)
+    flying_hero = FlyingSuperhero("Tony Stark", "Iron Man", 85, flight_speed=500)
+    strength_hero = StrengthSuperhero("Bruce Banner", "Hulk", 95, max_lift=50)
+
+    # Display information for each superhero
+    print("Superhero Profiles:")
+    print(generic_hero.display_info())
+    print(flying_hero.display_info())
+    print(strength_hero.display_info())
+
+    # Demonstrate methods
+    print("\nTesting Superhero Actions:")
+    print(generic_hero.heal(20))
+    print(flying_hero.fly())
+    print(strength_hero.smash())
+    print(flying_hero.take_damage(30))
+
+    # Demonstrate encapsulation
+    try:
+        print("\nTesting Encapsulation:")
+        flying_hero.name = "Peter Parker"  # Valid name change
+        print(f"New name for Iron Man: {flying_hero.name}")
+        flying_hero.name = ""  # Should raise an error
+    except ValueError as e:
+        print(f"Error: {e}")
+
+    # Demonstrate polymorphism (Activity 2)
+    superheroes = [generic_hero, flying_hero, strength_hero]
+    demonstrate_powers(superheroes)
+
+if __name__ == "__main__":
+    main()
